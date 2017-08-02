@@ -21,3 +21,6 @@ function getPrettyDate(tpl, date) {
 	
 	return tpl.replace(/\w+/g, (v) => strg[v]);
 }
+
+getPrettyDate('dd/MM/yyyy');
+getPrettyDate('ddd/MMM/yyyy');
