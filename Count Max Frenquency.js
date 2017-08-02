@@ -18,3 +18,14 @@ function countMaxFrequency(str) {
 
     return max + ' (' + count[max] + ')';
 }
+
+
+var countMaxFrequency = (str) =>
+    Array.prototype.reduce.call(str, (acum, l) => {
+        acum[l] = acum[l] ? ++acum[l] : 1;
+        acum.max = acum.max ? acum[acum.max] < acum[l] ? l : acum.max : l
+        acum.value = `${acum.max} = (${acum[acum.max]})`;
+
+        return acum;
+    }, {}).value;
+// countMaxFrequency('aabbb3');
