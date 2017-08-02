@@ -12,3 +12,6 @@ function appendNumber(str) {
 
     return newStr;
 }
+
+var appendNumber = (str, i = 0) => str.replace(/\d+/g, (v) => v + (++i));
+appendNumber('5 10 15 20') // 51 102 153 204
