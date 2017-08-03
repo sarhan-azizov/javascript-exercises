@@ -1,5 +1,5 @@
 function templater(templateString, dataObj) {
-	return templateString.replace(/\$\{(/w+)\}/g, (m, p) => dataObj[p])
+	return templateString.replace(/\$\{(\w+)\}/g, "$1")
 }
 
 templater('${who} ${action} ${what}', {
