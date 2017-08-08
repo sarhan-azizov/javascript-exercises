@@ -1,44 +1,44 @@
-// function fibonacci(n) {
-//     var fib = {
-//         1: 1,
-//         2: 1
-//     };
+<script>
+  function fib(c) {
+    let a = 0;
+    let b = 1;
+    let res = '';
 
-//     function fibNumber(x) {
-//         if (!fib[x]) {
-//             fib[x] = fibNumber(x - 1) + fibNumber(x - 2);
-//         }
-//         return fib[x];
-//     }
+    for (let i = 0; i < c; i++) {
+      let c = a + b;
 
-//     return fibNumber(n);
-// }
+      a = b;
+      b = c;
 
-// function fib(n) {
-//     var fibDict = {
-//         1: 1,
-//         2: 1
-//     },
-//         i;
+      res += c + ' ';
 
-//     for (i = 3; i <= n; i++) {
-//         fibDict[i] = fibDict[i - 1] + fibDict[i - 2];
-//     }
-
-//     return fibDict[n];
-// }
-
-function fibonacci(n) {
-    var fib1 = 1,
-        fib2 = 1,
-        tmp,
-        i;
-
-    for (i = 3; i <= n; i++) {
-        tmp = fib2;
-        fib2 = fib1;
-        fib1 = tmp + fib2;
     }
 
-    return fib1;
-}
+    return res;
+  }
+  console.log(fib(7));
+</script>
+<!--
+a = 0
+b = 1
+c = 1
+
+a = 1
+b = 1
+c = 2
+
+a = 1
+b = 2
+c = 3
+
+a = 2
+b = 3
+c = 5
+
+a = 3
+b = 5
+c = 8
+-->
+
+//0 1,2,3,5,8,13,21
+
