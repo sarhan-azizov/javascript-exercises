@@ -6,9 +6,7 @@
   function debounce(cb, delay = 0) {
     let id;
     return () => {
-      if (id) {
-        clearTimeout(id);
-      }
+      clearTimeout(id);
       id = setTimeout(cb, delay);
     }
   }
