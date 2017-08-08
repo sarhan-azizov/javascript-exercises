@@ -1,10 +1,7 @@
-function factorial(n) {
-    var i,
-        fact = 1;
+  function factorial(n) {
+    return n ? n * factorial(n - 1) : 1;
+  }
+  console.log(factorial(3));
+  // (3 * (2 * (1 * (0 ? 1 : n)))) = 6
 
-    for (i = n; i > 1; i--) {
-        fact *= i;
-    }
 
-    return fact;
-}
