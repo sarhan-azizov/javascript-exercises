@@ -1,17 +1,31 @@
 <button id="debounce">debounce</button>
+<button id="immediate-debounce">immediate debounce</button>
 <button id="throttle">throttle</button>
 
 <script>
-  // несколько вызовов функции в течение определенного времени в один вызов
-  function debounce(cb, delay = 0) {
-    let id;
+  // immediate = false
+  // 1. отсчет заддержки начинаеться после прекращения вызовов функции
+  // 2. функция вызываеться после задержки
+
+  // immediate = true
+  // 1. функция вызываеться немедленно
+  // 2. отсчет заддержки начинаеться после прекращения вызовов функции
+  // 3. функция вызываеться после задержки
+  function debounce(cb, delay = 0, immediate = false, ctx) {
+    let id = null;
     return () => {
       clearTimeout(id);
-      id = setTimeout(cb, delay);
+      if (id === null && immediate) {
+        cb.call(ctx || this);
+      }
+      id = setTimeout(() => {
+        cb.call(ctx || this);
+        id = null;
+      }, delay);
     }
   }
 
-  // не чаще одного раза в указанный период
+  // функция выполняеться не чаще одного раза в указанный период
   function throttle(cb, delay = 0) {
     let id = null;
     return () => {
@@ -27,6 +41,10 @@
   document.getElementById('debounce').addEventListener('click', debounce(() => {
     console.log('debounce');
   }, 1000));
+
+  document.getElementById('immediate-debounce').addEventListener('click', debounce(() => {
+    console.log('immediate debounce');
+  }, 1000, true));
 
   document.getElementById('throttle').addEventListener('click', throttle(() => {
     console.log('throttle');
