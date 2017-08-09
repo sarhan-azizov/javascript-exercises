@@ -1,20 +1,15 @@
 input: [{a: 'a'}, 'b', ['c', 'd'], ['e', ['f']], 'g']
 output: [{a: 'a'}, 'b', 'c', 'd', 'e', 'f', 'g']
 
-function flattenArray(array) {
-    var newArray = [],
-        n = array.length,
-        i;
+function flattenArray(arr) {
+	const res = [];
+	for (let i = 0; i < arr.length; i++) {
+		if (Array.isArray(arr[i])) {
+			Array.prototype.push.apply(res, flattenArray(arr[i]));
+		} else {
+			res.push(arr[i]);
+		}
+	}
 
-    for (i = 0; i < n; i++) {
-        if (Array.isArray(array[i])) {
-            newArray.push.apply(newArray, flattenArray(array[i]));
-        } else {
-            newArray.push(array[i]);
-        }
-    }
-
-    return newArray;
+	return res;
 }
-
-Object.prototype.toString.call(array[i]) === '[Object Array]';
