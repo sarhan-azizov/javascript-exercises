@@ -1,5 +1,5 @@
 <script>
-var data = [
+var model = [
     {
         id: '0',
         name: 'root',
@@ -28,6 +28,32 @@ var data = [
 ];
 
 /*
+
+
+[
+    {
+        id: 0,
+        name: '0',
+        expanded: true,
+        children: [
+            {
+                id: 1,
+                name: '1',
+                parent: 0,
+                expanded: true,
+                children: [
+                    {
+                        id: 2,
+                        name: '2',
+                        expanded: true,
+                        parent: 1
+                    }
+                ]
+            },
+        ]
+    },
+]
+
 let hasExpanded = false;
 const getChildrenItems = (data, { selectedNodeId, parentNode }) =>
     data.filter((item) => item.parent === parentNode.id).map((item) => {
@@ -54,39 +80,45 @@ const toTree = (data, selectedNodeId) =>
 
         return accum;
     }, []);
+
+
+
+
 */
 
 const setExpandedToParentNode = (parentNode) => {
-    parentNode.expanded = true;
-    if (parentNode.parentNode) {
-        setExpandedToParentNode(parentNode.parentNode);
-    }
+  parentNode.expanded = true;
+  if (parentNode.parentNode) {
+    setExpandedToParentNode(parentNode.parentNode);
+  }
 }
 
-const getChildrenItems = (data, { selectedNodeId, parentNode }) =>
-    data.filter((item) => item.parent === parentNode.item.id).map((item) => {
-        const node = { item, parentNode };
-        
-        if (selectedNodeId === item.id) {
-            node.expanded = true;
-            setExpandedToParentNode(parentNode);
-        }
+const getChildrenItems = (list, { selectedNodeId, parentNode }) =>
+  list
+    .filter((item) => item.parent === parentNode.item.id)
+    .map((item) => {
+      const node = { item, parentNode };
 
-        node.children = getChildrenItems(data, { selectedNodeId, parentNode: node }) || [];
+      if (selectedNodeId === item.id) {
+        node.expanded = true;
+        setExpandedToParentNode(parentNode);
+      }
 
-        return node;
+      node.children = getChildrenItems(list, { selectedNodeId, parentNode: node }) || [];
+
+      return node;
     });
 
-const toTree = (data, selectedNodeId) =>
-    data.reduce((tree, item) => {
-        if (!item.parent) {
-            const node = { item };
-            node.children = getChildrenItems(data, { selectedNodeId, parentNode: node }) || [];
-            tree.push(node)
-        }
+const toTree = (list, selectedNodeId) => list.reduce((tree, item) => {
+  if (!item.parent) {
+    const node = { item };
+    node.children = getChildrenItems(list, { selectedNodeId, parentNode: node }) || [];
+    tree.push(node);
+  }
 
-        return tree;
-    }, []);
+  return tree;
+}, []);
+
 
 console.log(toTree(data, '2'));
 
