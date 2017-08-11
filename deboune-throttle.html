@@ -6,7 +6,6 @@
   // immediate = false
   // 1. отсчет заддержки начинаеться после прекращения вызовов функции
   // 2. функция вызываеться после задержки
-
   // immediate = true
   // 1. функция вызываеться немедленно
   // 2. отсчет заддержки начинаеться после прекращения вызовов функции
@@ -14,17 +13,21 @@
   function debounce(cb, delay = 0, immediate = false, ctx) {
     let id = null;
     return () => {
-      clearTimeout(id);
-      if (id === null && immediate) {
-        cb.call(ctx || this);
+      if (immediate) {
+        if (id === null) {
+          cb.call(ctx || this);
+          id = setTimeout(() => {
+            id = null
+          }, delay);
+        }
+      } else {
+        clearTimeout(id);
+        id = setTimeout(() => {
+          cb.call(ctx || this);
+        }, delay);
       }
-      id = setTimeout(() => {
-        cb.call(ctx || this);
-        id = null;
-      }, delay);
     }
   }
-
   // функция выполняеться не чаще одного раза в указанный период
   function throttle(cb, delay = 0) {
     let id = null;
@@ -37,15 +40,12 @@
       }
     };
   }
-
   document.getElementById('debounce').addEventListener('click', debounce(() => {
     console.log('debounce');
   }, 1000));
-
   document.getElementById('immediate-debounce').addEventListener('click', debounce(() => {
     console.log('immediate debounce');
-  }, 1000, true));
-
+  }, 2000, true));
   document.getElementById('throttle').addEventListener('click', throttle(() => {
     console.log('throttle');
   }, 2000));
