@@ -53,37 +53,6 @@ var model = [
         ]
     },
 ]
-
-let hasExpanded = false;
-const getChildrenItems = (data, { selectedNodeId, parentNode }) =>
-    data.filter((item) => item.parent === parentNode.id).map((item) => {
-        hasExpanded = selectedNodeId === item.id;
-        const children = getChildrenItems(data, { selectedNodeId, parentNode: item }) || [];
-        return ({
-            item,
-            expanded: hasExpanded,
-            children
-        });
-    });
-
-const toTree = (data, selectedNodeId) =>
-    data.reduce((tree, item) => {
-        if (!item.parent) {
-            const children = getChildrenItems(data, { selectedNodeId, parentNode: item }) || [];
-            console.log(hasExpanded)
-            tree.push({
-                item,
-                expanded: hasExpanded,
-                children
-            });
-        }
-
-        return accum;
-    }, []);
-
-
-
-
 */
 
 const setExpandedToParentNode = (parentNode) => {
