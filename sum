@@ -1,0 +1,22 @@
+var sum = function(...args) {
+  sum.value = args.reduce((sum, n) => sum + n, 0);
+
+   function fn2(...args2) {
+    sum.value = args2.reduce((sum, n) => sum + n, sum.value);
+    return fn2;
+  } 
+  
+ return fn2
+}
+
+----
+sum(1,1,1)(1)
+sum.value
+
+-----
+sum(1,1,1)(1,1,1)
+----
+sum(1,1,1)(1,1,1)
+---
+sum(1)
+sum.value
